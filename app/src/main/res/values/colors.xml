@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#f4f4f4</color>
+    <color name="colorAccent">#f4f4f4</color>
+    <color name="colorSecondary">#000000</color>
+    <color name="colorTertiary">#6b6b6b</color>
+    <color name="colorBadge">#f56b96</color>
+    <color name="colorSecondaryAlpha">#AD000000</color>
+    <color name="colorPrimaryAlpha">#ADffffff</color>
+    <color name="colorCreditCardText">#253669</color>
+    <color name="colorButtonBg">#64d5e2</color>
+</resources>

@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Payment App</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_history">History</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_my_bank_accounts">My Bank Accounts</string>
+    <string name="msg_receive_money">Receive\nMoney</string>
+    <string name="msg_send_money">Send\nMoney</string>
+    <string name="label_send_money_to">Send Money to</string>
+    <string name="label_view_all">View All</string>
+    <string name="label_utilities">Utilities</string>
+    <string name="label_mobile">Mobile</string>
+    <string name="label_electricity">Electricity</string>
+    <string name="label_broadband">Broadband</string>
+    <string name="label_gas">Gas</string>
+    <string name="label_valid_thru">Valid\nThru</string>
+    <string name="label_my_profile">My Profile</string>
+    <string name="label_my_history">My History</string>
+    <string name="label_month">Month</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_personal_information">Personal Information</string>
+    <string name="label_edit">Edit</string>
+    <string name="label_manage_accounts">Manage Accounts</string>
+    <string name="label_share_the_gift_of_love">Share the gift of love</string>
+    <string name="label_share">Share</string>
+    <string name="label_send_money">Send Money</string>
+    <string name="label_send">Send</string>
+    <string name="hint_search_send_money">Search for Phone number or Bank account number</string>
+    <string name="hint_search_receive_money">Search for Phone number</string>
+    <string name="label_phone_contacts">Phone\nContacts</string>
+    <string name="label_bank_accounts">Bank\nAccounts</string>
+    <string name="label_add_beneficiary">Add Beneficiary</string>
+    <string name="label_amount">Amount</string>
+    <string name="label_enter_amount">Enter Amount</string>
+    <string name="label_debit_from">Debit from</string>
+    <string name="label_add_new_bank_account">Add New Bank Account</string>
+    <string name="rupee">\u20B9</string>
+    <string name="label_receive_money">Receive Money</string>
+    <!-- LOGIN -->
+    <string name="sign_in_to_continue">Inicia sesión para continuar</string>
+    <string name="email_text">Correo electrónico</string>
+    <string name="password_text">Contraseña</string>
+    <string name="sign_in_btn">Iniciar sesión</string>
+    <string name="cd_image_logo_login">Logo inicio sesión</string>
+</resources>

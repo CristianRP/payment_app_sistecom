@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CreditCardView">
+        <attr name="cardViewBackground" format="reference" />
+        <attr name="creditCardLogo" format="reference" />
+        <attr name="cardBalanceValue" format="string" />
+        <attr name="cardNumber" format="string" />
+        <attr name="cardValidity" format="string" />
+        <attr name="cardHolderName" format="string" />
+        <attr name="cardVisaImage" format="reference" />
+        <attr name="isCreditCardForGrid" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DashboardContactItem">
+        <attr name="contactImage" format="reference" />
+        <attr name="contactName" format="string" />
+        <attr name="hasBackgroundRing" format="boolean" />
+        <attr name="textSize" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="MonthItem">
+        <attr name="monthNumber" format="string" />
+    </declare-styleable>
+</resources>
