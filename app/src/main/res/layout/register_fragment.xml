@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModelRegister"
+            type="com.sistecom.paymentapp.ui.viewmodel.RegisterViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.fragment.RegisterFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgLoginLogo"
+                android:layout_width="@dimen/margin_grand"
+                android:layout_height="@dimen/margin_grand"
+                android:layout_marginStart="@dimen/margin_30"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_30"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:contentDescription="@string/cd_image_logo_login"
+                android:src="@drawable/tmp_sistemcom"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgLoginLogo">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/loginCardView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/margin_24"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginEnd="@dimen/margin_24"
+                    android:layout_marginBottom="@dimen/margin_16"
+                    app:cardCornerRadius="@dimen/margin_32"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/signInText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:text="@string/sign_up_to_continue"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <LinearLayout
+                                android:id="@+id/emailGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/signInText">
+
+                                <TextView
+                                    android:id="@+id/tvEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/email_text" />
+
+                                <EditText
+                                    android:id="@+id/etEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.email}"
+                                    android:ems="10"
+                                    android:hint="@string/email_text"
+                                    android:inputType="textEmailAddress"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/nameGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/emailGroupText">
+
+                                <TextView
+                                    android:id="@+id/tvName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/name_text" />
+
+                                <EditText
+                                    android:id="@+id/etName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.name}"
+                                    android:ems="10"
+                                    android:hint="@string/name_text"
+                                    android:inputType="text"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/middleNameGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/nameGroupText">
+
+                                <TextView
+                                    android:id="@+id/tvMiddleName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/middle_name_text" />
+
+                                <EditText
+                                    android:id="@+id/etMiddleName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.middleName}"
+                                    android:ems="10"
+                                    android:hint="@string/middle_name_text"
+                                    android:inputType="text"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/userGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/middleNameGroupText">
+
+                                <TextView
+                                    android:id="@+id/tvUserName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/user_name" />
+
+                                <EditText
+                                    android:id="@+id/etUserName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.userName}"
+                                    android:ems="10"
+                                    android:hint="@string/user_name"
+                                    android:inputType="text"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/customerCodeGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="32dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/userGroupText">
+
+                                <TextView
+                                    android:id="@+id/tvCustomerCode"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/customer_code" />
+
+                                <EditText
+                                    android:id="@+id/etCustomerCode"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.customerRefCode}"
+                                    android:ems="10"
+                                    android:hint="@string/customer_code"
+                                    android:inputType="text"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/passwordGroupText"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/customerCodeGroupText">
+
+                                <TextView
+                                    android:id="@+id/tvPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/password_text" />
+
+                                <EditText
+                                    android:id="@+id/etPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_round_style"
+                                    android:text="@={viewModelRegister.user.password}"
+                                    android:ems="10"
+                                    android:hint="@string/password_text"
+                                    android:inputType="textPassword"
+                                    android:autofillHints="" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnSend"
+                                style="@style/AppButtons"
+                                android:layout_marginStart="@dimen/margin_16"
+                                android:layout_marginTop="@dimen/margin_grand"
+                                android:layout_marginEnd="@dimen/margin_16"
+                                android:text="@string/sign_up_btn"
+                                app:backgroundTint="@color/colorButtonBg"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                                app:cornerRadius="@dimen/margin_16"
+                                android:onClick="@{() -> viewModelRegister.signUpInCognito()}"                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/passwordGroupText" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </ScrollView>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

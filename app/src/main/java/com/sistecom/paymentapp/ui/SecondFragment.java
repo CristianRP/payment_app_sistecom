@@ -1,4 +1,4 @@
-package com.sistecom.paymentapp;
+package com.sistecom.paymentapp.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
-import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
+import com.sistecom.paymentapp.R;
 
 public class SecondFragment extends Fragment {
 
@@ -35,16 +32,4 @@ public class SecondFragment extends Fragment {
             }
         });*/
     }
-
-    final SignUpHandler signUpCallback = new SignUpHandler() {
-        @Override
-        public void onSuccess(CognitoUser user, SignUpResult signUpResult) {
-
-        }
-
-        @Override
-        public void onFailure(Exception exception) {
-
-        }
-    };
 }

@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.sistecom.paymentapp.ui.fragment.ContractByCustomerFragment
+import com.sistecom.paymentapp.ui.fragment.RegisterFragment
 import kotlinx.android.synthetic.main.content_main.*
 
 /**
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history -> {
+                inflateFragment(ContractByCustomerFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
+                inflateFragment(RegisterFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }

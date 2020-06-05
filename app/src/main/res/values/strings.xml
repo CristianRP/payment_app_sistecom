@@ -42,8 +42,15 @@
     <string name="label_receive_money">Receive Money</string>
     <!-- LOGIN -->
     <string name="sign_in_to_continue">Inicia sesión para continuar</string>
+    <string name="sign_up_to_continue">Registrate</string>
     <string name="email_text">Correo electrónico</string>
+    <string name="name_text">Nombres</string>
+    <string name="middle_name_text">Apellidos</string>
     <string name="password_text">Contraseña</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="customer_code">Código de cliente</string>
     <string name="sign_in_btn">Iniciar sesión</string>
     <string name="cd_image_logo_login">Logo inicio sesión</string>
+    <string name="sign_up_btn">Registrarse</string>
+    <string name="contracts">Servicios contratados</string>
 </resources>
