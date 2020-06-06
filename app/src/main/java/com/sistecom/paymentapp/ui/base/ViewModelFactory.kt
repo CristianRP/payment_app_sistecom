@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sistecom.paymentapp.data.api.SistecomApiHelper
 import com.sistecom.paymentapp.data.repository.MainRepository
 import com.sistecom.paymentapp.ui.viewmodel.ContractByCustomerViewModel
+import com.sistecom.paymentapp.ui.viewmodel.OrdersByContractViewModel
 import java.lang.IllegalArgumentException
 
 /**
@@ -17,6 +18,9 @@ class ViewModelFactory(private val apiHelper: SistecomApiHelper) : ViewModelProv
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ContractByCustomerViewModel::class.java)) {
             return ContractByCustomerViewModel(MainRepository(apiHelper)) as T
+        }
+        if (modelClass.isAssignableFrom(OrdersByContractViewModel::class.java)) {
+            return OrdersByContractViewModel(MainRepository(apiHelper)) as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

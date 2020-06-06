@@ -9,12 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.api.RetrofitBuilder
 import com.sistecom.paymentapp.data.api.SistecomApiHelper
+import com.sistecom.paymentapp.data.model.Contract
 import com.sistecom.paymentapp.data.model.DataNode
+import com.sistecom.paymentapp.data.model.order.Order
 import com.sistecom.paymentapp.databinding.ContractByCustomerFragmentBinding
 import com.sistecom.paymentapp.ui.adapter.ContractByCustomerAdapter
 import com.sistecom.paymentapp.ui.base.ViewModelFactory
@@ -64,7 +67,7 @@ class ContractByCustomerFragment : Fragment() {
 
     private fun setupUI() {
         contractByCustomerBinding.recyclerContractsByCustomer.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        contractByCustomerAdapter = ContractByCustomerAdapter(arrayListOf())
+        contractByCustomerAdapter = ContractByCustomerAdapter(arrayListOf()) { dataNode : DataNode -> view?.let { navigateToOrders(it, contract = dataNode.contract) } }
         contractByCustomerBinding.recyclerContractsByCustomer.adapter = contractByCustomerAdapter
     }
 
@@ -96,6 +99,25 @@ class ContractByCustomerFragment : Fragment() {
             addDataNodes(dataNode)
             notifyDataSetChanged()
         }
+    }
+
+    private fun navigateToOrders(view: View, contract: Contract) {
+        /*val action =
+                ContractByCustomerFragmentDirections
+                        .actionContractByCustomerFragmentToOrdersByContractFragment()
+        action.contractId = contract.id
+        view.findNavController().navigate(action)*/
+        val bundle = Bundle()
+        bundle.apply {
+            putInt("contractId", contract.id)
+        }
+        val orderFragment = OrdersByContractFragment()
+        orderFragment.arguments = bundle
+
+        activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.frame_content, orderFragment)
+                ?.addToBackStack(ContractByCustomerFragment::class.java.simpleName)
+                ?.commit()
     }
 
 }

@@ -8,6 +8,7 @@ import com.sistecom.paymentapp.data.api.RetrofitBuilder.apiService
  *
  */
 
-class SistecomApiHelper(private val apiService: SistecomAPI) {
+class SistecomApiHelper(private val apiService: SistecomAPI, private val contractId: Int? = 0) {
     suspend fun getContractsByCustomer() = apiService.getContractsByCustomer(1)
+    suspend fun getOrdersByContract() = contractId?.let { apiService.getOrdersByContract(it) }
 }

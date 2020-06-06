@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.model.DataNode
+import com.sistecom.paymentapp.generated.callback.OnClickListener
 import kotlinx.android.synthetic.main.item_contract_by_customer_layout.view.*
 
 /**
@@ -17,18 +18,20 @@ import kotlinx.android.synthetic.main.item_contract_by_customer_layout.view.*
  *
  */
 
-class ContractByCustomerAdapter(private val dataNode: ArrayList<DataNode>)
+class ContractByCustomerAdapter(private val dataNode: ArrayList<DataNode>,
+                                val clickListener: (DataNode) -> Unit)
     : RecyclerView.Adapter<ContractByCustomerAdapter.DataViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(dataSingleNode: DataNode) {
+        fun bind(dataSingleNode: DataNode, clickListener: (DataNode) -> Unit) {
             itemView.apply {
                 txtContractTitle.text = dataSingleNode.detail[0].contractDetail.description
                 Glide.with(imgLogoContract.context)
                         .load(imgLogoContract.context.getDrawable(R.drawable.ic_icon_contract))
                         .into(imgLogoContract)
+                setOnClickListener { clickListener(dataSingleNode) }
             }
         }
     }
@@ -47,7 +50,7 @@ class ContractByCustomerAdapter(private val dataNode: ArrayList<DataNode>)
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(dataNode[position])
+        holder.bind(dataNode[position], clickListener)
         val childLayoutManager =
                 LinearLayoutManager(holder.itemView.recyclerViewProductsRelated.context,
                                     RecyclerView.VERTICAL, false)

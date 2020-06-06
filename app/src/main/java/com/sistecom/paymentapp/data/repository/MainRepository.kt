@@ -10,4 +10,5 @@ import com.sistecom.paymentapp.data.api.SistecomApiHelper
 
 class MainRepository(private val apiHelper: SistecomApiHelper) {
     suspend fun getContractsByCustomer() = apiHelper.getContractsByCustomer()
+    suspend fun getOrdersByContract() = apiHelper.getOrdersByContract()
 }

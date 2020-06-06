@@ -53,4 +53,5 @@
     <string name="cd_image_logo_login">Logo inicio sesión</string>
     <string name="sign_up_btn">Registrarse</string>
     <string name="contracts">Servicios contratados</string>
+    <string name="orders">Ordenes de pago</string>
 </resources>

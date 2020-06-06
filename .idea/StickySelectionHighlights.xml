@@ -93,6 +93,16 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/data/model/order/Order.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/data/model/order/OrderByContractResponse.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/data/repository/MainRepository.kt">
           <value>
             <PaintGroupHighlightMap />
@@ -118,6 +128,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/adapter/OrdersByContractAdapter.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/adapter/ProductRelatedAdapter.kt">
           <value>
             <PaintGroupHighlightMap />
@@ -138,6 +153,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/fragment/OrdersByContractFragment.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/fragment/RegisterFragment.kt">
           <value>
             <PaintGroupHighlightMap />
@@ -149,6 +169,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/viewmodel/ContractByCustomerViewModel.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/viewmodel/OrdersByContractViewModel.kt">
           <value>
             <PaintGroupHighlightMap />
           </value>
@@ -218,7 +243,17 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_order_layout.xml">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/login_fragment.xml">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/orders_by_contract_fragment.xml">
           <value>
             <PaintGroupHighlightMap />
           </value>
@@ -269,6 +304,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/xml/sec.xml">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/build.gradle">
           <value>
             <PaintGroupHighlightMap />
           </value>
