@@ -65,7 +65,7 @@ class OrdersByContractFragment : Fragment() {
         val contractId = arguments?.getInt("contractId", 1)
         ordersByContractViewModel = ViewModelProvider(
                 this,
-                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, contractId)))
+                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, 1)))
                 .get(OrdersByContractViewModel::class.java)
     }
 

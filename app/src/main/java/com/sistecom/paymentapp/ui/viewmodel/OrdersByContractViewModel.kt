@@ -12,7 +12,7 @@ class OrdersByContractViewModel(private val mainRepository: MainRepository) : Vi
     fun getOrdersByContract() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data= null))
         try {
-            emit(Resource.success(data= mainRepository.getPendingOrdersByCustomer()))
+            emit(Resource.success(data= mainRepository.getOrdersByContract()))
         } catch (exception: Exception) {
             emit(Resource.error(data= null, message = exception.message ?: "An error has ocurred!"))
         }
