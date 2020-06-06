@@ -24,7 +24,7 @@ class ProductRelatedAdapter(private val listProductRelated: ArrayList<ProductRel
             itemView.apply {
                 txtProductRelated.text = productRelated.description
                 Glide.with(imgProductRelated.context)
-                        .load(imgProductRelated.context.getDrawable(R.drawable.ic_tv_tmp))
+                        .load(imgProductRelated.context.getDrawable(R.drawable.ic_icon_hd_tv))
                         .into(imgProductRelated)
             }
         }

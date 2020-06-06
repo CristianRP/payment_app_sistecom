@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.model.DataNode
-import com.sistecom.paymentapp.generated.callback.OnClickListener
 import kotlinx.android.synthetic.main.item_contract_by_customer_layout.view.*
 
 /**
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.item_contract_by_customer_layout.view.*
  */
 
 class ContractByCustomerAdapter(private val dataNode: ArrayList<DataNode>,
-                                val clickListener: (DataNode) -> Unit)
+                                private val clickListener: (DataNode) -> Unit)
     : RecyclerView.Adapter<ContractByCustomerAdapter.DataViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()

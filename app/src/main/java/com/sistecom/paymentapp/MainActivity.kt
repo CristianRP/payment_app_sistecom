@@ -1,14 +1,15 @@
 package com.sistecom.paymentapp
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.sistecom.paymentapp.ui.fragment.ContractByCustomerFragment
-import com.sistecom.paymentapp.ui.fragment.OrdersByContractFragment
-import com.sistecom.paymentapp.ui.fragment.RegisterFragment
+import com.sistecom.paymentapp.ui.adapter.PendingOrdersFragment
+import com.sistecom.paymentapp.ui.fragment.*
+import com.sistecom.paymentapp.utils.PrefManagerHelper
 import kotlinx.android.synthetic.main.content_main.*
 
 /**
@@ -25,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         navigation.itemIconTintList = null
+        inflateFragment(ContractByCustomerFragment())
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        PrefManagerHelper.init(this)
     }
 
     private val mOnNavigationItemSelectedListener =
@@ -33,24 +36,31 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_home -> {
                 inflateFragment(ContractByCustomerFragment())
+                navigation.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_history -> {
-                val bundle = Bundle()
+                /*val bundle = Bundle()
                 bundle.apply {
                     putInt("contractId", 1)
                 }
-                val orderFragment = OrdersByContractFragment()
-                orderFragment.arguments = bundle
-                inflateFragment(orderFragment)
+                val orderFragment = PendingOrdersFragment()
+                orderFragment.arguments = bundle*/
+                inflateFragment(PendingOrdersFragment())
+                navigation.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
-                inflateFragment(LoginFragment())
+                inflateFragment(ReceiptsFragment())
+                navigation.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
-                inflateFragment(RegisterFragment())
+                //inflateFragment(RegisterFragment())
+                //inflateFragment(ProfileFragment())
+                inflateFragment(LoginFragment())
+                //supportFragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
+                navigation.visibility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -59,15 +69,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun inflateFragment(fragment: Fragment) {
         selectedFragment = fragment
-        supportFragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
+        supportFragmentManager.beginTransaction().replace(R.id.frame_content, fragment)
+                .addToBackStack(fragment.toString())
+                .commit();
     }
 
     override fun onBackPressed() {
         if (selectedFragment is ContractByCustomerFragment) {
             super.onBackPressed()
         } else {
-            navigation.selectedItemId = R.id.navigation_home
             inflateFragment(ContractByCustomerFragment())
+            navigation.visibility = View.VISIBLE
+            navigation.selectedItemId = R.id.navigation_home
         }
     }
 }

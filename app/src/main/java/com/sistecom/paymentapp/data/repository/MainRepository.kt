@@ -11,4 +11,9 @@ import com.sistecom.paymentapp.data.api.SistecomApiHelper
 class MainRepository(private val apiHelper: SistecomApiHelper) {
     suspend fun getContractsByCustomer() = apiHelper.getContractsByCustomer()
     suspend fun getOrdersByContract() = apiHelper.getOrdersByContract()
+    suspend fun getReceiptsByCustomer() = apiHelper.getReceiptsByCustomer()
+    suspend fun getCustomerProfile() = apiHelper.getCustomerProfile()
+    suspend fun getCustomerProfileByUser() = apiHelper.getCustomerProfileByUser()
+    suspend fun addCognitoReferenceToCustomer() = apiHelper.addCognitoReferenceToCustomer()
+    suspend fun getPendingOrdersByCustomer() = apiHelper.getPendingOrdersByCustomer()
 }
