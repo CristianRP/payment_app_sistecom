@@ -1,29 +1,25 @@
 package com.sistecom.paymentapp.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.Observable
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.sistecom.paymentapp.R
-import com.sistecom.paymentapp.data.api.RetrofitBuilder
-import com.sistecom.paymentapp.data.api.SistecomApiHelper
-import com.sistecom.paymentapp.data.model.user.Customer
 import com.sistecom.paymentapp.databinding.LoginFragmentBinding
-import com.sistecom.paymentapp.ui.base.ViewModelFactory
 import com.sistecom.paymentapp.ui.viewmodel.LoginViewModel
-import com.sistecom.paymentapp.ui.viewmodel.ProfileViewModel
+import com.sistecom.paymentapp.utils.AuthenticationStatus
 import com.sistecom.paymentapp.utils.PrefManagerHelper
-import com.sistecom.paymentapp.utils.PrefManagerHelper.CUSTOMER_ID
-import com.sistecom.paymentapp.utils.PrefManagerHelper.USER_ID
-import com.sistecom.paymentapp.utils.Status
+import com.sistecom.paymentapp.utils.PrefManagerHelper.COGNITO_MIDDLE_NAME
+import com.sistecom.paymentapp.utils.PrefManagerHelper.COGNITO_NAME
 import kotlinx.android.synthetic.main.register_fragment.view.*
 
 
@@ -33,8 +29,7 @@ class LoginFragment : Fragment() {
         fun newInstance() = LoginFragment()
     }
 
-    private val viewModel: LoginViewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }
-    private lateinit var profileViewModel: ProfileViewModel
+    private val viewModel: LoginViewModel by activityViewModels()
     private lateinit var binding: LoginFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +42,8 @@ class LoginFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         Glide.with(binding.constraintContainerLogin.context)
-                .load(binding.constraintContainerLogin.context.getDrawable(R.drawable.img_background_login))
+                .load(binding.constraintContainerLogin.context.getDrawable(R.drawable.img_background_blueyellow))
                 .into(binding.constraintContainerLogin.imgFondoPrincipal)
-        //binding.btnSend.setOnClickListener() { v -> goToHome(v) }
         binding.btnRegisterForm.setOnClickListener() { goToRegister() }
         return binding.root
     }
@@ -59,10 +53,11 @@ class LoginFragment : Fragment() {
 
         val signInCognitSuccess = Observer<Boolean> {
             if (it) {
-                setupProfileViewModel()
-                getUserProfile()
-                activity?.onBackPressed()
-                //goToHome()
+                findNavController().popBackStack()
+
+                Toast.makeText(activity?.applicationContext,
+                        "Bienvenido ${PrefManagerHelper.read(COGNITO_NAME, "usuario")} ${PrefManagerHelper.read(COGNITO_MIDDLE_NAME, "usuario")}",
+                        Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -75,14 +70,27 @@ class LoginFragment : Fragment() {
         viewModel.visibility.observe(viewLifecycleOwner, visibility)
     }
 
-    private fun setupProfileViewModel() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when(authenticationState) {
+                AuthenticationStatus.AUTHENTICATED -> showWelcome()
+                AuthenticationStatus.UNAUTHENTICATED -> showLogin()
+                AuthenticationStatus.INVALID_AUTHENTICATION -> showErrorMessage()
+                else -> showErrorMessage()
+            }
+        })
+    }
+
+    /*private fun setupProfileViewModel() {
         profileViewModel = ViewModelProvider(
                 this,
                 ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, userId = binding.etUserName.text.toString())))
                 .get(ProfileViewModel::class.java)
-    }
+    }*/
 
-    private fun getUserProfile() {
+    /*private fun getUserProfile() {
         viewModel.visibility.value = View.VISIBLE
         profileViewModel.getCustomerProfileByUser().observe(viewLifecycleOwner, Observer {
             it?.let { resource ->
@@ -110,23 +118,29 @@ class LoginFragment : Fragment() {
                 }
             }
         })
-    }
+    }*/
 
     fun goToHome() {
-        activity?.supportFragmentManager?.beginTransaction()
+        /*activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.frame_content, ContractByCustomerFragment())
-                ?.commit()
+                ?.commit()*/
     }
 
     private fun goToRegister() {
-        activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.frame_content, RegisterFragment())
-                ?.commit()
+        val actionToRegisterFragment = LoginFragmentDirections.loginToRegister()
+        findNavController().navigate(actionToRegisterFragment)
     }
 
-    private fun initCustomer(customerResponse: Customer) {
-        customerResponse.userId?.let { PrefManagerHelper.write(USER_ID, it) }
-        customerResponse.id?.let { PrefManagerHelper.write(CUSTOMER_ID, it) }
+    private fun showWelcome() {
+        findNavController().navigate(R.id.app_navigation)
     }
 
+    private fun showLogin() {
+        Toast.makeText(activity?.applicationContext, "Inicia sesión para continuar.", Toast.LENGTH_SHORT).show()
+        //findNavController().navigate(R.id.authentication_navigation, null)
+    }
+
+    private fun showErrorMessage() {
+        Toast.makeText(activity?.applicationContext, "Usuario no confirmado.", Toast.LENGTH_SHORT).show()
+    }
 }

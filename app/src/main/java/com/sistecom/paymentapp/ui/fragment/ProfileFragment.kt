@@ -9,16 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.api.RetrofitBuilder
 import com.sistecom.paymentapp.data.api.SistecomApiHelper
 import com.sistecom.paymentapp.data.model.user.Customer
 import com.sistecom.paymentapp.databinding.ProfileFragmentBinding
 import com.sistecom.paymentapp.ui.base.ViewModelFactory
+import com.sistecom.paymentapp.ui.viewmodel.LoginViewModel
 import com.sistecom.paymentapp.ui.viewmodel.ProfileViewModel
 import com.sistecom.paymentapp.ui.viewmodel.ReceiptsViewModel
+import com.sistecom.paymentapp.utils.AuthenticationStatus
 import com.sistecom.paymentapp.utils.Status
 
 class ProfileFragment : Fragment() {
@@ -29,6 +34,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var viewModel: ProfileViewModel
     private lateinit var profileFragmentBinding: ProfileFragmentBinding
+    private val viewModelLogin: LoginViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,7 +45,21 @@ class ProfileFragment : Fragment() {
                 false
         )
         profileFragmentBinding.lifecycleOwner = this
+        profileFragmentBinding.btnShare.setOnClickListener { signOutUser() }
         return profileFragmentBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when(authenticationState) {
+                AuthenticationStatus.AUTHENTICATED -> showWelcome()
+                AuthenticationStatus.UNAUTHENTICATED -> showLogin()
+                AuthenticationStatus.INVALID_AUTHENTICATION -> showErrorMessage()
+                else -> showErrorMessage()
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -95,5 +115,24 @@ class ProfileFragment : Fragment() {
         profileFragmentBinding.txtUserAddress.text = document
         profileFragmentBinding.txtSecurity.text = phoneNumber
         profileFragmentBinding.txtManageAccounts.text = nit
+    }
+
+    private fun signOutUser() {
+        viewModelLogin.signOutUser()
+    }
+
+    private fun showWelcome() {
+        Toast.makeText(activity?.applicationContext, "WELCOME", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLogin() {
+        Toast.makeText(activity?.applicationContext, "Inicia sesión para continuar.", Toast.LENGTH_SHORT).show()
+        val navOptions = NavOptions.Builder().setLaunchSingleTop(true)
+        findNavController().popBackStack(R.id.app_navigation, true)
+        findNavController().navigate(R.id.authentication_navigation, null)
+    }
+
+    private fun showErrorMessage() {
+        Toast.makeText(activity?.applicationContext, "Error en la aplicación.", Toast.LENGTH_SHORT).show()
     }
 }

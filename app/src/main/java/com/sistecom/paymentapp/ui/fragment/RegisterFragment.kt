@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.api.RetrofitBuilder
@@ -42,7 +43,7 @@ class RegisterFragment : Fragment() {
         binding.viewModelRegister = viewModelRegister
         binding.lifecycleOwner = this
         Glide.with(binding.constraintContainerRegister.context)
-                .load(binding.constraintContainerRegister.context.getDrawable(R.drawable.img_background_login))
+                .load(binding.constraintContainerRegister.context.getDrawable(R.drawable.img_background_blueyellow))
                 .into(binding.constraintContainerRegister.imgFondoPrincipal)
         //binding.btnSend.setOnClickListener() { v -> goToLogin(v) }
         //binding.btnLogin.setOnClickListener() { goToLogin() }
@@ -99,10 +100,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun goToLogin() {
-        activity?.supportFragmentManager?.beginTransaction()
+        /*activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.frame_content, LoginFragment())
                 //?.addToBackStack(LoginFragment.toString())
-                ?.commit()
+                ?.commit()*/
     }
 
     private fun initApi(alternId: String, userId: String) {
@@ -114,7 +115,7 @@ class RegisterFragment : Fragment() {
         //Toast.makeText(context, "Cliente referenciado: ${cognitoResponse.reference.message}")
         Toast.makeText(context, "Cliente referenciado con éxito", Toast.LENGTH_SHORT).show()
         Log.d("REGISTER_VM_REFER", cognitoResponse.toString())
-        goToLogin()
+        findNavController().popBackStack()
     }
 
 }

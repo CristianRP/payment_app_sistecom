@@ -129,9 +129,9 @@ class PendingOrdersFragment : Fragment() {
 
         Log.e("ORDERS_FRAGMENT", "MS: $order")
 
-        activity?.supportFragmentManager?.beginTransaction()
+        /*activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.frame_content, orderFragment)
                 ?.addToBackStack(OrdersByContractFragment::class.java.simpleName)
-                ?.commit()
+                ?.commit()*/
     }
 }

@@ -15,6 +15,11 @@ object PrefManagerHelper {
 
     const val USER_ID = "usuarioId"
     const val CUSTOMER_ID = "customerId"
+    const val COGNITO_SUB = "sub"
+    const val COGNITO_NAME = "name"
+    const val COGNITO_MIDDLE_NAME = "middle_name"
+    const val COGNITO_EMAIL = "email"
+    const val USER_HAS_SESSION = "has_session"
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -28,10 +33,22 @@ object PrefManagerHelper {
         return preferences.getLong(key, value)
     }
 
+    fun read(key: String, value: Boolean): Boolean? {
+        return preferences.getBoolean(key, value)
+    }
+
     fun write(key: String, value: String) {
         val prefsEditor: SharedPreferences.Editor = preferences.edit()
         with(prefsEditor) {
             putString(key, value)
+            apply()
+        }
+    }
+
+    fun write(key: String, value: Boolean) {
+        val prefsEditor: SharedPreferences.Editor = preferences.edit()
+        with(prefsEditor) {
+            putBoolean(key, value)
             apply()
         }
     }
@@ -48,6 +65,15 @@ object PrefManagerHelper {
         val prefsEditor: SharedPreferences.Editor = preferences.edit()
         with(prefsEditor) {
             putInt(key, value)
+            commit()
+        }
+    }
+
+    fun clearAll() {
+        val prefsEditor: SharedPreferences.Editor = preferences.edit()
+        with(prefsEditor) {
+            clear()
+            putBoolean(USER_HAS_SESSION, false)
             commit()
         }
     }

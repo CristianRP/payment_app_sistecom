@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sistecom.paymentapp.R
@@ -22,6 +24,8 @@ import com.sistecom.paymentapp.databinding.ContractByCustomerFragmentBinding
 import com.sistecom.paymentapp.ui.adapter.ContractByCustomerAdapter
 import com.sistecom.paymentapp.ui.base.ViewModelFactory
 import com.sistecom.paymentapp.ui.viewmodel.ContractByCustomerViewModel
+import com.sistecom.paymentapp.ui.viewmodel.LoginViewModel
+import com.sistecom.paymentapp.utils.AuthenticationStatus
 
 import com.sistecom.paymentapp.utils.Status.SUCCESS
 import com.sistecom.paymentapp.utils.Status.LOADING
@@ -32,6 +36,8 @@ class ContractByCustomerFragment : Fragment() {
     companion object {
         fun newInstance() = ContractByCustomerFragment()
     }
+
+    private val viewModelLogin: LoginViewModel by activityViewModels()
 
     private lateinit var viewModelContractByCustomer: ContractByCustomerViewModel
     private lateinit var contractByCustomerAdapter: ContractByCustomerAdapter
@@ -56,6 +62,19 @@ class ContractByCustomerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //viewModel = ViewModelProviders.of(this).get(ContractByCustomerViewModel::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when(authenticationState) {
+                AuthenticationStatus.AUTHENTICATED -> showWelcome()
+                AuthenticationStatus.UNAUTHENTICATED -> showLogin()
+                AuthenticationStatus.INVALID_AUTHENTICATION -> showLogin()
+                else -> showErrorMessage()
+            }
+        })
     }
 
     private fun setupViewModel() {
@@ -114,10 +133,23 @@ class ContractByCustomerFragment : Fragment() {
         val orderFragment = OrdersByContractFragment()
         orderFragment.arguments = bundle
 
-        activity?.supportFragmentManager?.beginTransaction()
+        /*activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.frame_content, orderFragment)
                 ?.addToBackStack(ContractByCustomerFragment::class.java.simpleName)
-                ?.commit()
+                ?.commit()*/
+    }
+
+    private fun showWelcome() {
+        Toast.makeText(activity?.applicationContext, "WELCOME", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLogin() {
+        Toast.makeText(activity?.applicationContext, "Inicia sesión para continuar.", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.authentication_navigation, null)
+    }
+
+    private fun showErrorMessage() {
+        Toast.makeText(activity?.applicationContext, "Error en la aplicación.", Toast.LENGTH_SHORT).show()
     }
 
 }

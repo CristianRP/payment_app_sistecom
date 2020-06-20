@@ -12,7 +12,7 @@ object AuthenticationError {
     }
 
     fun InvalidParameter(): String {
-        return "El campo de contraseña no cumple con el éstandar requerido. Mayor a 6 carácteres, un simbolo especial y una mayuscula"
+        return "Verifique los campos de nombre de usuario y contraseña"
     }
 
     fun InvalidPassword(): String {

@@ -9,5 +9,7 @@
     <color name="colorSecondaryAlpha">#AD000000</color>
     <color name="colorPrimaryAlpha">#ADffffff</color>
     <color name="colorCreditCardText">#253669</color>
-    <color name="colorButtonBg">#64d5e2</color>
+    <color name="colorButtonBg">#272643</color>
+    <color name="black">#000000</color>
+    <color name="transparent_white">#C1FFFFFF</color>
 </resources>

@@ -212,7 +212,7 @@
                         app:layout_constraintTop_toBottomOf="@id/cardPersonalInfo">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/margin_8">
@@ -240,7 +240,7 @@
                                 android:layout_width="0dp"
                                 android:layout_margin="@dimen/margin_16"
                                 android:backgroundTint="@color/colorButtonBg"
-                                android:text="@string/label_share"
+                                android:text="LOGOUT"
                                 app:cornerRadius="@dimen/margin_16"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

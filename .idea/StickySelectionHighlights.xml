@@ -8,6 +8,16 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/build/generated/source/kapt/debug/com/sistecom/paymentapp/databinding/LoginFragmentBindingImpl.java">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/build/generated/source/navigation-args/debug/com/sistecom/paymentapp/ui/fragment/LoginFragmentDirections.java">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <value>
             <PaintGroupHighlightMap />
@@ -273,7 +283,17 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/utils/AuthenticationAwsErrorManager.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/utils/AuthenticationError.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/utils/AuthenticationStatus.kt">
           <value>
             <PaintGroupHighlightMap />
           </value>
