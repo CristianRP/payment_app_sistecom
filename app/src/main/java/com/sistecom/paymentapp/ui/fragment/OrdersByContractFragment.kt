@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.sistecom.paymentapp.R
@@ -36,6 +37,7 @@ class OrdersByContractFragment : Fragment() {
     private lateinit var ordersByContractViewModel: OrdersByContractViewModel
     private lateinit var ordersByContractAdapter: OrdersByContractAdapter
     private lateinit var ordersByContractFragmentBinding: OrdersByContractFragmentBinding
+    private val contractByCustomerArguments: ContractByCustomerFragmentArgs by navArgs()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -61,11 +63,11 @@ class OrdersByContractFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        //val contractId = arguments?.let { OrdersByContractFragmentArgs.fromBundle(it).contractId }?.toInt()
-        val contractId = arguments?.getInt("contractId", 1)
+        val contractId = contractByCustomerArguments.contractId
+        Log.e("ORDERS", "CONTRACT ID: $contractId")
         ordersByContractViewModel = ViewModelProvider(
                 this,
-                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, 1)))
+                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, contractId)))
                 .get(OrdersByContractViewModel::class.java)
     }
 

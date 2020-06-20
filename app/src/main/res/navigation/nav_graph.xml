@@ -44,10 +44,42 @@
         <fragment
             android:id="@+id/contract_customer_fragment"
             android:name="com.sistecom.paymentapp.ui.fragment.ContractByCustomerFragment"
-            android:label="ContractByCustomerFragment" />
+            android:label="ContractByCustomerFragment" >
+            <action
+                android:id="@+id/contract_customer_to_orders_contract"
+                app:destination="@id/orders_contract_fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" />
+            <argument
+                android:name="contractId"
+                android:defaultValue="0"
+                app:argType="integer" />
+
+        </fragment>
         <fragment
             android:id="@+id/pending_orders_fragment"
             android:name="com.sistecom.paymentapp.ui.adapter.PendingOrdersFragment"
-            android:label="PendingOrdersFragment" />
+            android:label="PendingOrdersFragment" >
+            <action
+                android:id="@+id/action_pending_orders_fragment_to_payment_fragment"
+                app:destination="@id/payment_fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" />
+            <argument
+                android:name="order"
+                app:argType="com.sistecom.paymentapp.data.model.order.Order" />
+        </fragment>
+        <fragment
+            android:id="@+id/orders_contract_fragment"
+            android:name="com.sistecom.paymentapp.ui.fragment.OrdersByContractFragment"
+            android:label="OrdersByContractFragment" />
+        <fragment
+            android:id="@+id/payment_fragment"
+            android:name="com.sistecom.paymentapp.ui.fragment.PaymentFragment"
+            android:label="PaymentFragment" />
     </navigation>
 </navigation>

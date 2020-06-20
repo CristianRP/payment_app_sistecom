@@ -44,8 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        //setupActionBar(navController, appBarConfiguration)
-
         setupBottomNavMenu(navController)
 
         PrefManagerHelper.init(this)
@@ -68,90 +66,19 @@ class MainActivity : AppCompatActivity() {
                 bottomNav.visibility = View.VISIBLE
             }
             selectedFragment = destination.id
-            Toast.makeText(this@MainActivity, "Navigated to $dest", Toast.LENGTH_SHORT).show()
             Log.d("NavigationActivity", "Navigated to $dest")
         }
-    }
-
-    /*private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.contract_customer_fragment -> {
-                Toast.makeText(this@MainActivity, "pato", Toast.LENGTH_SHORT).show()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.pending_orders_fragment -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.receipts_fragment -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.profile_fragment -> {
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }*/
-
-    private fun setupActionBar(navController: NavController,
-                               appBarConfig: AppBarConfiguration) {
-        setupActionBarWithNavController(navController, appBarConfig)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.navigation).navigateUp(appBarConfiguration)
     }
 
-    /*private val mOnNavigationItemSelectedListener =
-            BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                inflateFragment(ContractByCustomerFragment())
-                navigation.visibility = View.VISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_history -> {
-                *//*val bundle = Bundle()
-                bundle.apply {
-                    putInt("contractId", 1)
-                }
-                val orderFragment = PendingOrdersFragment()
-                orderFragment.arguments = bundle*//*
-                inflateFragment(PendingOrdersFragment())
-                navigation.visibility = View.VISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_profile -> {
-                inflateFragment(ReceiptsFragment())
-                navigation.visibility = View.VISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_settings -> {
-                //inflateFragment(RegisterFragment())
-                //inflateFragment(ProfileFragment())
-                inflateFragment(LoginFragment())
-                //supportFragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
-                navigation.visibility = View.GONE
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }*/
-
-   /* private fun inflateFragment(fragment: Fragment) {
-        selectedFragment = fragment
-        *//*supportFragmentManager.beginTransaction().replace(R.id.frame_content, fragment)
-                .addToBackStack(fragment.toString())
-                .commit();*//*
-    }*/
-
     override fun onBackPressed() {
-        super.onBackPressed()
-        /*if (selectedFragment == R.id.contract_customer_fragment) {
+        if (selectedFragment == R.id.contract_customer_fragment) {
             super.onBackPressed()
         } else {
             findNavController(R.id.nav_host_fragment).popBackStack()
-            //findNavController(R.id.nav_host_fragment).getBackStackEntry()
-
-        }*/
+        }
     }
 }

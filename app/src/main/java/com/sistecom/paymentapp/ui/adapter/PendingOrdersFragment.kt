@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.sistecom.paymentapp.R
@@ -38,6 +40,7 @@ class PendingOrdersFragment : Fragment() {
     private lateinit var pendingOrdersByContractViewModel: PendingOrdersViewModel
     private lateinit var ordersByContractAdapter: OrdersByContractAdapter
     private lateinit var ordersByContractFragmentBinding: OrdersByContractFragmentBinding
+    private val customerAlternId by lazy { PrefManagerHelper.read(CUSTOMER_ID, "1") }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -55,24 +58,10 @@ class PendingOrdersFragment : Fragment() {
         return ordersByContractFragmentBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // viewModel = ViewModelProviders.of(this).get(PendingOrdersViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     private fun setupViewModel() {
-        //val contractId = arguments?.let { OrdersByContractFragmentArgs.fromBundle(it).contractId }?.toInt()
-        //val contractId = arguments?.getInt("contractId", 1)
-        val customer = PrefManagerHelper.read(CUSTOMER_ID, "1")
-        Log.e("VALUE_FROM_PREF", "MESSAGE: $customer")
-        var customerID = 1
-        if (!customer.equals("")) {
-            customerID = PrefManagerHelper.read(CUSTOMER_ID, "1")?.toInt()!!
-        }
         pendingOrdersByContractViewModel = ViewModelProvider(
                 this,
-                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, customerId = customerID)))
+                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, alternId = customerAlternId)))
                 .get(PendingOrdersViewModel::class.java)
     }
 
@@ -114,24 +103,8 @@ class PendingOrdersFragment : Fragment() {
 
     private fun navigateToOrders(order: Order) {
         Log.e("ORDERS_FRAGMENT", "MS: ONCLICK")
-        /*val action =
-                ContractByCustomerFragmentDirections
-                        .actionContractByCustomerFragmentToOrdersByContractFragment()
-        action.contractId = contract.id
-        view.findNavController().navigate(action)*/
-        val gson = Gson()
-        val bundle = Bundle()
-        bundle.apply {
-            putString("order", gson.toJson(order))
-        }
-        val orderFragment = PaymentFragment()
-        orderFragment.arguments = bundle
-
-        Log.e("ORDERS_FRAGMENT", "MS: $order")
-
-        /*activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.frame_content, orderFragment)
-                ?.addToBackStack(OrdersByContractFragment::class.java.simpleName)
-                ?.commit()*/
+        val orderBundle = PendingOrdersFragmentArgs.Builder(order)
+        findNavController().navigate(R.id.action_pending_orders_fragment_to_payment_fragment,
+                orderBundle.build().toBundle())
     }
 }

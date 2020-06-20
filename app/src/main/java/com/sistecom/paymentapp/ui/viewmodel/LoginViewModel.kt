@@ -112,8 +112,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             cognitoUserDetails?.attributes?.attributes?.get("name")?.let { PrefManagerHelper.write(COGNITO_NAME, it) }
             cognitoUserDetails?.attributes?.attributes?.get("middle_name")?.let { PrefManagerHelper.write(COGNITO_MIDDLE_NAME, it) }
             cognitoUserDetails?.attributes?.attributes?.get("email")?.let { PrefManagerHelper.write(COGNITO_EMAIL, it) }
-            PrefManagerHelper.write(USER_HAS_SESSION, authenticationState.value == AuthenticationStatus.AUTHENTICATED)
             authenticationState.value = AuthenticationStatus.AUTHENTICATED
+            PrefManagerHelper.write(USER_HAS_SESSION, authenticationState.value == AuthenticationStatus.AUTHENTICATED)
 
             Log.e("LOGIN_VM", "VISIBLE GONE")
         }

@@ -8,11 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.model.order.Order
 import com.sistecom.paymentapp.databinding.PaymentFragmentBinding
+import com.sistecom.paymentapp.ui.adapter.PendingOrdersFragmentArgs
 import com.sistecom.paymentapp.ui.viewmodel.PaymentViewModel
+import com.sistecom.paymentapp.ui.viewmodel.PendingOrdersViewModel
 
 class PaymentFragment : Fragment() {
 
@@ -22,6 +25,7 @@ class PaymentFragment : Fragment() {
 
     private lateinit var viewModel: PaymentViewModel
     private lateinit var paymentFragmentBinding: PaymentFragmentBinding
+    private val orderArgs: PendingOrdersFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,11 +40,8 @@ class PaymentFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(PaymentViewModel::class.java)
-        // TODO: Use the ViewModel
-        val gson = Gson()
-        val orderGson = arguments?.getString("order")
-        val order = gson.fromJson(orderGson, Order::class.java)
+        //viewModel = ViewModelProviders.of(this).get(PaymentViewModel::class.java)
+        val order = orderArgs.order
         Log.e("ORER_FRAG", "MS: $order")
         paymentFragmentBinding.order = order
 

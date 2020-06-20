@@ -18,6 +18,7 @@ import com.sistecom.paymentapp.databinding.ReceiptsFragmentBinding
 import com.sistecom.paymentapp.ui.adapter.ReceiptByCustomerAdapter
 import com.sistecom.paymentapp.ui.base.ViewModelFactory
 import com.sistecom.paymentapp.ui.viewmodel.ReceiptsViewModel
+import com.sistecom.paymentapp.utils.PrefManagerHelper
 
 import com.sistecom.paymentapp.utils.Status.SUCCESS
 import com.sistecom.paymentapp.utils.Status.LOADING
@@ -33,6 +34,7 @@ class ReceiptsFragment : Fragment() {
     private lateinit var receiptsViewModel: ReceiptsViewModel
     private lateinit var receiptsAdapter: ReceiptByCustomerAdapter
     private lateinit var receiptsFragmentBinding: ReceiptsFragmentBinding
+    private val customerAlternId by lazy { PrefManagerHelper.read(PrefManagerHelper.CUSTOMER_ID, "1") }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -49,16 +51,10 @@ class ReceiptsFragment : Fragment() {
         return receiptsFragmentBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //iewModel = ViewModelProviders.of(this).get(ReceiptsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     private fun setupViewModel() {
         receiptsViewModel = ViewModelProvider(
                 this,
-                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, customerId = 1)))
+                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, alternId = customerAlternId)))
                 .get(ReceiptsViewModel::class.java)
     }
 

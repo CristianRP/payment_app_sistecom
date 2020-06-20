@@ -18,7 +18,7 @@ import retrofit2.http.Query
 interface SistecomAPI {
 
     @GET("api/contract/index")
-    suspend fun getContractsByCustomer(@Query("pCustomerId") customerId: Int):
+    suspend fun getContractsByCustomer(@Query("pCustomerId") alternId: String):
             ContractByCustomerResponse
 
     @GET("api/order/index")
@@ -26,7 +26,7 @@ interface SistecomAPI {
             OrderByContractResponse
 
     @GET("api/receipt/index")
-    suspend fun getReceiptsByCustomer(@Query("pCustomerId") customerId: Int):
+    suspend fun getReceiptsByCustomer(@Query("pCustomerId") alternId: String):
             ReceiptByCustomerResponse
 
     @GET("api/customer/profile")
@@ -38,8 +38,8 @@ interface SistecomAPI {
                                               @Query("userId") userId: String):
             CognitoReferenceResponse
 
-    @GET("api/order/pendenting?pCustomerId=1")
-    suspend fun getPendingOrders(@Query("pCustomerId") customerId: Int ):
+    @GET("api/order/pendenting")
+    suspend fun getPendingOrders(@Query("pCustomerId") customerAlterId: String ):
         OrderByContractResponse
 
     @GET("api/customer/profile")

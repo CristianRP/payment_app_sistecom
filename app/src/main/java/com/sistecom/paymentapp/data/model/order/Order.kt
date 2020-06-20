@@ -1,6 +1,8 @@
 package com.sistecom.paymentapp.data.model.order
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by: cristianramirez
@@ -8,6 +10,7 @@ import com.google.gson.annotations.SerializedName
  *
  */
 
+@Parcelize
 data class Order (
         @SerializedName("id") val id : Int,
         @SerializedName("alternId") val alternId : Int,
@@ -15,4 +18,4 @@ data class Order (
         @SerializedName("concept") val concept : String,
         @SerializedName("amount") val amount : Double,
         @SerializedName("status") val status : String
-)
+) : Parcelable

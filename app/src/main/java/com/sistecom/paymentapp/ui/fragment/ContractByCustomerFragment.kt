@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sistecom.paymentapp.R
@@ -26,6 +27,7 @@ import com.sistecom.paymentapp.ui.base.ViewModelFactory
 import com.sistecom.paymentapp.ui.viewmodel.ContractByCustomerViewModel
 import com.sistecom.paymentapp.ui.viewmodel.LoginViewModel
 import com.sistecom.paymentapp.utils.AuthenticationStatus
+import com.sistecom.paymentapp.utils.PrefManagerHelper
 
 import com.sistecom.paymentapp.utils.Status.SUCCESS
 import com.sistecom.paymentapp.utils.Status.LOADING
@@ -42,6 +44,7 @@ class ContractByCustomerFragment : Fragment() {
     private lateinit var viewModelContractByCustomer: ContractByCustomerViewModel
     private lateinit var contractByCustomerAdapter: ContractByCustomerAdapter
     private lateinit var contractByCustomerBinding: ContractByCustomerFragmentBinding
+    private val customerAlternId by lazy { PrefManagerHelper.read(PrefManagerHelper.CUSTOMER_ID, "1") }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -57,11 +60,6 @@ class ContractByCustomerFragment : Fragment() {
         setupUI()
         setupObservers()
         return contractByCustomerBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProviders.of(this).get(ContractByCustomerViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,7 +78,7 @@ class ContractByCustomerFragment : Fragment() {
     private fun setupViewModel() {
         viewModelContractByCustomer = ViewModelProvider(
                this,
-                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService)))
+                ViewModelFactory(SistecomApiHelper(RetrofitBuilder.apiService, alternId = customerAlternId)))
                 .get(ContractByCustomerViewModel::class.java)
     }
 
@@ -121,22 +119,9 @@ class ContractByCustomerFragment : Fragment() {
     }
 
     private fun navigateToOrders(view: View, contract: Contract) {
-        /*val action =
-                ContractByCustomerFragmentDirections
-                        .actionContractByCustomerFragmentToOrdersByContractFragment()
-        action.contractId = contract.id
-        view.findNavController().navigate(action)*/
-        val bundle = Bundle()
-        bundle.apply {
-            putInt("contractId", contract.id)
-        }
-        val orderFragment = OrdersByContractFragment()
-        orderFragment.arguments = bundle
-
-        /*activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.frame_content, orderFragment)
-                ?.addToBackStack(ContractByCustomerFragment::class.java.simpleName)
-                ?.commit()*/
+        val args = ContractByCustomerFragmentArgs.Builder()
+        args.contractId = contract.id
+        findNavController().navigate(R.id.contract_customer_to_orders_contract, args.build().toBundle())
     }
 
     private fun showWelcome() {
