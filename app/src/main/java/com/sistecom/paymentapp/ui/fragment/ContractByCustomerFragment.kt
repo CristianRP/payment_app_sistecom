@@ -67,7 +67,6 @@ class ContractByCustomerFragment : Fragment() {
 
         viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
-                AuthenticationStatus.AUTHENTICATED -> showWelcome()
                 AuthenticationStatus.UNAUTHENTICATED -> showLogin()
                 AuthenticationStatus.INVALID_AUTHENTICATION -> showLogin()
                 else -> showErrorMessage()
@@ -122,10 +121,6 @@ class ContractByCustomerFragment : Fragment() {
         val args = ContractByCustomerFragmentArgs.Builder()
         args.contractId = contract.id
         findNavController().navigate(R.id.contract_customer_to_orders_contract, args.build().toBundle())
-    }
-
-    private fun showWelcome() {
-        Toast.makeText(activity?.applicationContext, "WELCOME", Toast.LENGTH_SHORT).show()
     }
 
     private fun showLogin() {

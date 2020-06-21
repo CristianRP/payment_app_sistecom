@@ -54,7 +54,6 @@ class ProfileFragment : Fragment() {
 
         viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
-                AuthenticationStatus.AUTHENTICATED -> showWelcome()
                 AuthenticationStatus.UNAUTHENTICATED -> showLogin()
                 AuthenticationStatus.INVALID_AUTHENTICATION -> showErrorMessage()
                 else -> showErrorMessage()
@@ -119,10 +118,6 @@ class ProfileFragment : Fragment() {
 
     private fun signOutUser() {
         viewModelLogin.signOutUser()
-    }
-
-    private fun showWelcome() {
-        Toast.makeText(activity?.applicationContext, "WELCOME", Toast.LENGTH_SHORT).show()
     }
 
     private fun showLogin() {
