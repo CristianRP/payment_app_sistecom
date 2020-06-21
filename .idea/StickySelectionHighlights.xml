@@ -348,6 +348,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/app_bar_global.xml">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml">
           <value>
             <PaintGroupHighlightMap />

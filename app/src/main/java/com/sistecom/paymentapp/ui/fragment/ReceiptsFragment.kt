@@ -45,6 +45,7 @@ class ReceiptsFragment : Fragment() {
                 false
         )
         receiptsFragmentBinding.lifecycleOwner = this
+        receiptsFragmentBinding.title = resources.getString(R.string.title_receipts)
         setupViewModel()
         setupUI()
         setupObservers()

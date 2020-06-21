@@ -51,7 +51,7 @@ class PendingOrdersFragment : Fragment() {
                 false
         )
         ordersByContractFragmentBinding.lifecycleOwner = this
-
+        ordersByContractFragmentBinding.title = resources.getString(R.string.title_order_contract)
         setupViewModel()
         setupUI()
         setupObservers()

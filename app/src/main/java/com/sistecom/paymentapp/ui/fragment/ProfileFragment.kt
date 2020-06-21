@@ -45,6 +45,7 @@ class ProfileFragment : Fragment() {
                 false
         )
         profileFragmentBinding.lifecycleOwner = this
+        profileFragmentBinding.title = resources.getString(R.string.label_profile_data)
         profileFragmentBinding.btnShare.setOnClickListener { signOutUser() }
         return profileFragmentBinding.root
     }
@@ -54,6 +55,7 @@ class ProfileFragment : Fragment() {
 
         viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
+                AuthenticationStatus.AUTHENTICATED -> {}
                 AuthenticationStatus.UNAUTHENTICATED -> showLogin()
                 AuthenticationStatus.INVALID_AUTHENTICATION -> showErrorMessage()
                 else -> showErrorMessage()

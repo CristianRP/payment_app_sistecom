@@ -35,6 +35,7 @@ class PaymentFragment : Fragment() {
                 container,
                 false
         )
+        paymentFragmentBinding.title = resources.getString(R.string.title_payment)
         return paymentFragmentBinding.root
     }
 

@@ -7,6 +7,9 @@
     <string name="title_receipt">Pagos</string>
     <string name="title_profile">Perfil</string>
     <string name="title_settings">Settings</string>
+    <string name="title_payment">Pago de orden</string>
+    <string name="title_order_contract">Ordenes de pago</string>
+    <string name="title_receipts">Recibos de pago</string>
     <string name="title_my_bank_accounts">My Bank Accounts</string>
     <string name="msg_receive_money">Receive\nMoney</string>
     <string name="msg_send_money">Send\nMoney</string>

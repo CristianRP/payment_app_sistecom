@@ -55,7 +55,7 @@ class ContractByCustomerFragment : Fragment() {
                 false
         )
         contractByCustomerBinding.lifecycleOwner = this
-
+        contractByCustomerBinding.title = resources.getString(R.string.contracts)
         setupViewModel()
         setupUI()
         setupObservers()
@@ -67,6 +67,7 @@ class ContractByCustomerFragment : Fragment() {
 
         viewModelLogin.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when(authenticationState) {
+                AuthenticationStatus.AUTHENTICATED -> {}
                 AuthenticationStatus.UNAUTHENTICATED -> showLogin()
                 AuthenticationStatus.INVALID_AUTHENTICATION -> showLogin()
                 else -> showErrorMessage()
