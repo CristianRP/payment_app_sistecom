@@ -18,6 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_selected"
             android:padding="@dimen/margin_8">
 
             <androidx.appcompat.widget.AppCompatImageView

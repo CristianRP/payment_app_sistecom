@@ -8,13 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.view.ActionMode
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.sistecom.paymentapp.MainActivity
 import com.sistecom.paymentapp.R
 import com.sistecom.paymentapp.data.api.RetrofitBuilder
 import com.sistecom.paymentapp.data.api.SistecomApiHelper
@@ -39,6 +45,7 @@ class PendingOrdersFragment : Fragment() {
 
     private lateinit var pendingOrdersByContractViewModel: PendingOrdersViewModel
     private lateinit var ordersByContractAdapter: OrdersByContractAdapter
+    private var tracker: SelectionTracker<Long>? = null
     private lateinit var ordersByContractFragmentBinding: OrdersByContractFragmentBinding
     private val customerAlternId by lazy { PrefManagerHelper.read(CUSTOMER_ID, "1") }
 
@@ -69,6 +76,16 @@ class PendingOrdersFragment : Fragment() {
         ordersByContractFragmentBinding.recyclerOrders.layoutManager = LinearLayoutManager(activity?.applicationContext)
         ordersByContractAdapter = OrdersByContractAdapter(arrayListOf()) { order: Order -> navigateToOrders(order) }
         ordersByContractFragmentBinding.recyclerOrders.adapter = ordersByContractAdapter
+        tracker = SelectionTracker.Builder<Long>(
+                "mySelection",
+                ordersByContractFragmentBinding.recyclerOrders,
+                StableIdKeyProvider(ordersByContractFragmentBinding.recyclerOrders),
+                OrdersByContractAdapter.MyItemDetailsLookup(ordersByContractFragmentBinding.recyclerOrders),
+                StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+                SelectionPredicates.createSelectAnything()
+        ).build()
+        ordersByContractAdapter.tracker = tracker
     }
 
     private fun setupObservers() {
