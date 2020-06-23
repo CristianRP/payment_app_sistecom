@@ -70,8 +70,8 @@
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right" />
             <argument
-                android:name="order"
-                app:argType="com.sistecom.paymentapp.data.model.order.Order" />
+                android:name="orders"
+                app:argType="com.sistecom.paymentapp.data.model.order.Order[]" />
         </fragment>
         <fragment
             android:id="@+id/orders_contract_fragment"

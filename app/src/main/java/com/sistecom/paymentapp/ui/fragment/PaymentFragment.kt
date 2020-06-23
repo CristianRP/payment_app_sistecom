@@ -42,10 +42,15 @@ class PaymentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //viewModel = ViewModelProviders.of(this).get(PaymentViewModel::class.java)
-        val order = orderArgs.order
-        Log.e("ORER_FRAG", "MS: $order")
-        paymentFragmentBinding.order = order
-
+        val orders = orderArgs.orders
+        val gson = Gson()
+        Log.e("ORER_FRAG", "MS: ${gson.toJson(orders)}")
+        paymentFragmentBinding.order = orders[0]
+        var pato = 0.toDouble()
+        orders.map {
+            pato += it.amount
+        }
+        paymentFragmentBinding.title = pato.toString()
     }
 
 

@@ -1,8 +1,12 @@
 package com.sistecom.paymentapp.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.ItemKeyProvider
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sistecom.paymentapp.R
@@ -16,12 +20,17 @@ import kotlinx.android.synthetic.main.item_order_layout.view.*
  *
  */
 
-class OrdersByContractAdapter(private val ordersList: ArrayList<Order>,
-                              val clickListener: (Order) -> Unit)
-    : RecyclerView.Adapter<OrdersByContractAdapter.DataViewHolder>() {
+class PendingOrdersAdapter(val ordersList: ArrayList<Order>)
+    : RecyclerView.Adapter<PendingOrdersAdapter.DataViewHolder>() {
+
+    var tracker: SelectionTracker<Long>? = null
+
+    init {
+        setHasStableIds(true)
+    }
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(order: Order, clickListener: (Order) -> Unit) {
+        fun bind(order: Order, isSelected: Boolean) {
             itemView.apply {
                 val statusAndDate =  """${order.status}${order.requestDate}"""
                 val alternId = "${order.alternId}"
@@ -29,14 +38,32 @@ class OrdersByContractAdapter(private val ordersList: ArrayList<Order>,
                 txtConcept.text = order.concept
                 txtRequestDate.text = statusAndDate
                 txtTransactionAmount.text = order.amount.toString()
+                isActivated = isSelected
                 Glide.with(imgCardLogo.context)
                         .load(imgCardLogo.context.getDrawable(R.drawable.ic_icon_cc_card))
                         .into(imgCardLogo)
                 Glide.with(imgLogoOrder.context)
                         .load(imgLogoOrder.context.getDrawable(R.drawable.ic_icon_invoice))
                         .into(imgLogoOrder)
-                setOnClickListener { clickListener(order) }
+                //setOnClickListener { clickListener(order) }
             }
+        }
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+                object: ItemDetailsLookup.ItemDetails<Long>() {
+                    override fun getPosition(): Int = absoluteAdapterPosition
+                    override fun getSelectionKey(): Long? = itemId
+                }
+    }
+
+    class MyItemDetailsLookup(private val recyclerView: RecyclerView) :
+            ItemDetailsLookup<Long>() {
+        override fun getItemDetails(e: MotionEvent): ItemDetails<Long>? {
+            val view = recyclerView.findChildViewUnder(e.x, e.y)
+            if (view != null) {
+                return (recyclerView.getChildViewHolder(view) as DataViewHolder)
+                        .getItemDetails()
+            }
+            return null
         }
     }
 
@@ -50,11 +77,14 @@ class OrdersByContractAdapter(private val ordersList: ArrayList<Order>,
     }
 
     override fun getItemId(position: Int): Long {
-        return super.getItemId(position)
+        return position.toLong()
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(ordersList[position], clickListener)
+        val pos = ordersList[position]
+        tracker?.let {
+            holder.bind(pos, it.isSelected(position.toLong()))
+        }
     }
 
     fun addOrders(listOrders: List<Order>) {

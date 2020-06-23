@@ -62,4 +62,6 @@
     <string name="receipts">Recibos de pago</string>
     <string name="label_profile_data">Datos del perfil</string>
     <string name="loading_content">Cargando…</string>
+    <!-- Pending orders -->
+    <string name="proced_to_pay">Pagar</string>
 </resources>

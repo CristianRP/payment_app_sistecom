@@ -183,6 +183,11 @@
             <PaintGroupHighlightMap />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/adapter/PendingOrdersAdapter.kt">
+          <value>
+            <PaintGroupHighlightMap />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/sistecom/paymentapp/ui/adapter/PendingOrdersFragment.kt">
           <value>
             <PaintGroupHighlightMap />

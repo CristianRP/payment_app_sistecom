@@ -1,5 +1,7 @@
 package com.sistecom.paymentapp.ui.adapter
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.ActionMode
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,18 +39,20 @@ import com.sistecom.paymentapp.ui.viewmodel.PendingOrdersViewModel
 import com.sistecom.paymentapp.utils.PrefManagerHelper
 import com.sistecom.paymentapp.utils.PrefManagerHelper.CUSTOMER_ID
 import com.sistecom.paymentapp.utils.Status
+import kotlinx.coroutines.selects.select
 
-class PendingOrdersFragment : Fragment() {
+class PendingOrdersFragment : Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = PendingOrdersFragment()
     }
 
     private lateinit var pendingOrdersByContractViewModel: PendingOrdersViewModel
-    private lateinit var ordersByContractAdapter: OrdersByContractAdapter
+    private lateinit var pendingOrdersAdapter: PendingOrdersAdapter
     private var tracker: SelectionTracker<Long>? = null
     private lateinit var ordersByContractFragmentBinding: OrdersByContractFragmentBinding
     private val customerAlternId by lazy { PrefManagerHelper.read(CUSTOMER_ID, "1") }
+    private var selectedItems: ArrayList<Order> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -59,6 +64,9 @@ class PendingOrdersFragment : Fragment() {
         )
         ordersByContractFragmentBinding.lifecycleOwner = this
         ordersByContractFragmentBinding.title = resources.getString(R.string.title_order_contract)
+        if (savedInstanceState != null) {
+            tracker?.onRestoreInstanceState(savedInstanceState)
+        }
         setupViewModel()
         setupUI()
         setupObservers()
@@ -74,18 +82,45 @@ class PendingOrdersFragment : Fragment() {
 
     private fun setupUI() {
         ordersByContractFragmentBinding.recyclerOrders.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        ordersByContractAdapter = OrdersByContractAdapter(arrayListOf()) { order: Order -> navigateToOrders(order) }
-        ordersByContractFragmentBinding.recyclerOrders.adapter = ordersByContractAdapter
-        tracker = SelectionTracker.Builder<Long>(
-                "mySelection",
+        pendingOrdersAdapter = PendingOrdersAdapter(arrayListOf())
+        ordersByContractFragmentBinding.recyclerOrders.adapter = pendingOrdersAdapter
+        tracker = SelectionTracker.Builder(
+                "selection-1",
                 ordersByContractFragmentBinding.recyclerOrders,
                 StableIdKeyProvider(ordersByContractFragmentBinding.recyclerOrders),
-                OrdersByContractAdapter.MyItemDetailsLookup(ordersByContractFragmentBinding.recyclerOrders),
+                PendingOrdersAdapter.MyItemDetailsLookup(ordersByContractFragmentBinding.recyclerOrders),
                 StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
                 SelectionPredicates.createSelectAnything()
         ).build()
-        ordersByContractAdapter.tracker = tracker
+        tracker?.addObserver(object : SelectionTracker.SelectionObserver<Long>() {
+            val gson = Gson()
+            override fun onSelectionChanged() {
+                val numberOfSelections = tracker?.selection!!.size()
+                if (numberOfSelections > 0){
+                    ordersByContractFragmentBinding.title = "$numberOfSelections ordenes seleccionadas"
+                    ordersByContractFragmentBinding.selected = true
+                    ordersByContractFragmentBinding.btnPayment.show()
+                    ordersByContractFragmentBinding.btnPayment.extend()
+                    tracker?.selection!!.map {
+                        val order = pendingOrdersAdapter.ordersList[it.toInt()]
+                        if (!selectedItems.contains(order)) {
+                            selectedItems.apply {
+                                add(order)
+                            }
+                        }
+                        Log.e("SELECTED_ITEMS", "TEST : ${gson.toJson(order)}")
+                    }
+                } else {
+                    ordersByContractFragmentBinding.title = resources.getString(R.string.title_order_contract)
+                    ordersByContractFragmentBinding.selected = false
+                    ordersByContractFragmentBinding.btnPayment.hide()
+                    selectedItems.clear()
+                }
+            }
+        })
+        pendingOrdersAdapter.tracker = tracker
+        ordersByContractFragmentBinding.btnPayment.setOnClickListener(this)
     }
 
     private fun setupObservers() {
@@ -112,15 +147,21 @@ class PendingOrdersFragment : Fragment() {
     }
 
     private fun retrieveList(listOrder: List<Order>) {
-        ordersByContractAdapter.apply {
+        pendingOrdersAdapter.apply {
             addOrders(listOrder)
             notifyDataSetChanged()
         }
     }
 
-    private fun navigateToOrders(order: Order) {
+    override fun onClick(v: View?) {
+        val gson = Gson()
+        Log.e("PENDING", "ORDERS: ${gson.toJson(selectedItems)}")
+        navigateToOrders(selectedItems)
+    }
+
+    private fun navigateToOrders(orders: List<Order>) {
         Log.e("ORDERS_FRAGMENT", "MS: ONCLICK")
-        val orderBundle = PendingOrdersFragmentArgs.Builder(order)
+        val orderBundle = PendingOrdersFragmentArgs.Builder(orders.toTypedArray())
         findNavController().navigate(R.id.action_pending_orders_fragment_to_payment_fragment,
                 orderBundle.build().toBundle())
     }
